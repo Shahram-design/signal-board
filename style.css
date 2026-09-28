@@ -8,3 +8,5 @@ select{background:#252b38;color:var(--tx);width:100%}
 .up{color:var(--up)}.dn{color:var(--dn)}.big{font-size:30px;font-weight:800}
 .g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 table{width:100%;font-size:13px;border-collapse:collapse;margin-top:8px}td{padding:4px 0;border-top:1px solid #252b38}
+input{font-size:16px;border-radius:10px;border:0;padding:12px;background:#252b38;color:var(--tx);width:100%;margin-top:8px}
+.warn{color:#f59e0b;font-size:13px;margin-top:6px}
