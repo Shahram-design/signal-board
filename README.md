@@ -1,15 +1,10 @@
-# Signal Board v2 (Twelve Data)
+# Signal Board v3
 
-Forex + Gold ke liye 1 min / 2 min UP-DOWN signal. Sirf Demo use.
+Forex + Gold ke liye 1 min / 2 min signal, filters ke saath. Sirf Demo use.
 
-## Files
-index.html, style.css, app.js (teeno repo ke root mein)
+Files: index.html, style.css, app.js (repo ke root mein).
+Setup: GitHub > Settings > Pages > main / root.
 
-## Setup
-1. twelvedata.com par free account banao, API key copy karo.
-2. Repo GitHub par upload karo, Settings > Pages > main / root > Save.
-3. Key app.js ke top par API_KEY mein already daali hui hai.
-4. Pair chuno, CREATE SIGNAL dabao.
-
-## Limit
-Free plan: 8 requests/min, 800/day. Har signal = 1 request.
+Filters: 5m + 15m trend, ADX (sideways), confidence 70%+. Sab pass hon tabhi UP/DOWN, warna SKIP.
+Har signal = 3 API requests (limit: 8/min, 800/day).
+Win/Loss buttons se apni asli accuracy track hoti hai.
