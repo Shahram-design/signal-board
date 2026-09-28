@@ -1,15 +1,15 @@
-# Live Signal Board
+# Signal Board v2 (Twelve Data)
 
-Binance live data se 1 min / 2 min UP-DOWN signal dashboard (Demo use only).
+Forex + Gold ke liye 1 min / 2 min UP-DOWN signal. Sirf Demo use.
 
 ## Files
-- index.html - page
-- style.css - design
-- app.js - live data + indicators + signal logic
+index.html, style.css, app.js (teeno repo ke root mein)
 
-## Run
-Local: `python3 -m http.server 8000` phir browser mein localhost:8000 kholo.
-24/7: GitHub Pages / Netlify / Vercel par deploy karo.
+## Setup
+1. twelvedata.com par free account banao, API key copy karo.
+2. Repo GitHub par upload karo, Settings > Pages > main / root > Save.
+3. Key app.js ke top par API_KEY mein already daali hui hai.
+4. Pair chuno, CREATE SIGNAL dabao.
 
-## Note
-Signals guarantee nahi hain. Pehle demo account par test karo.
+## Limit
+Free plan: 8 requests/min, 800/day. Har signal = 1 request.
