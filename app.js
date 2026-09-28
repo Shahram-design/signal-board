@@ -64,11 +64,14 @@ async function get(sym,int,n){
  const j=await(await fetch(`https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(sym)}&interval=${int}&outputsize=${n}&apikey=${API_KEY}`)).json();
  if(j.status==='error'||!j.values)throw new Error(j.message||'data nahi mila');
  return j.values.reverse().map(v=>({t:new Date(v.datetime.replace(' ','T')+'Z').getTime(),o:+v.open,h:+v.high,l:+v.low,c:+v.close}))}
+const cache={};
+async function getC(sym,int,n,ttl){const k=sym+int,c=cache[k];if(c&&Date.now()-c.t<ttl)return c.d;const d=await get(sym,int,n);cache[k]={t:Date.now(),d};return d}
+function cool(s){const b=$('btn');b.disabled=true;const iv=setInterval(()=>{if(--s<=0){clearInterval(iv);b.disabled=false;b.textContent='⚡ CREATE SIGNAL'}else b.textContent='⏳ '+s+'s ruko'},1000);b.textContent='⏳ '+s+'s ruko'}
 $('btn').onclick=async()=>{
  const name=$('pair').value,sym=PAIRS[name];
  $('btn').disabled=true;$('st').textContent='⏳ data la raha hai…';$('warn').textContent='';
  try{
-  const [c1,c5,c15]=await Promise.all([get(sym,'1min',120),get(sym,'5min',60),get(sym,'15min',60)]);
+  const [c1,c5,c15]=await Promise.all([get(sym,'1min',120),getC(sym,'5min',60,240000),getC(sym,'15min',60,840000)]);
   const age=(Date.now()-c1.at(-1).t)/60000;
   if(age>5)$('warn').textContent=`⚠️ Market band lag raha hai (last candle ${Math.round(age)} min purani). Trade mat lagao.`;
   const F={t5:trend(c5),t15:trend(c15),adx:adx(c1)};
@@ -79,5 +82,6 @@ $('btn').onclick=async()=>{
   card('r1','1 मिनट',a1,ts,'1m',name);card('r2','2 मिनट',a2,ts,'2m',name);
   if(a1){hist.unshift(`${ts} ${name} 1m:${a1.verdict}(${a1.conf}%) 2m:${a2?a2.verdict+'('+a2.conf+'%)':'-'}`);hist=hist.slice(0,15);sv('h',hist);renderH()}
   if(navigator.vibrate)navigator.vibrate(60);
- }catch(e){$('st').textContent='🔴';$('warn').textContent='Error: '+e.message}
- $('btn').disabled=false};
+ }catch(e){$('st').textContent='🔴';const m=e.message;$('warn').textContent=/minute/i.test(m)?'Minute ki limit poori. 60 second ruko.':/day|daily/i.test(m)?'Aaj ki daily limit poori. Kal chalega.':'Error: '+m;cool(/minute/i.test(m)?60:5);return}
+ cool(8)};
+ 
